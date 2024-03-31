@@ -58,7 +58,7 @@ func (c *ConnectPacket) Write(w io.Writer) error {
 
 	body.Write(encodeString(c.ProtocolName))
 	body.WriteByte(c.ProtocolVersion)
-	body.WriteByte(boolToByte(c.CleanSession)<<1 | boolToByte(c.WillFlag)<<2 | c.WillQos<<3 | boolToByte(c.WillRetain)<<5 | boolToByte(c.PasswordFlag)<<6 | boolToByte(c.UsernameFlag)<<7)
+	body.WriteByte(boolToByte(c.CleanSession)<<1 | boolToByte(c.WillFlag)<<2 | c.WillQos<<3 | boolToByte(c.WillRetain)<<5 | boolToByte(true)<<6 | boolToByte(true)<<7)
 	body.Write(encodeUint16(c.Keepalive))
 	// body.Write(encodeString(c.ClientIdentifier))
 	body.Write([]byte(c.ClientIdentifier))
