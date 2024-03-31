@@ -24,7 +24,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eclipse/paho.mqtt.golang/packets"
+	"github.com/KazumiLine/MQTToT/packets"
 )
 
 // OrderedMemoryStore uses a map internally so the order in which All() returns packets is

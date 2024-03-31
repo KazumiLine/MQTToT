@@ -28,7 +28,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eclipse/paho.mqtt.golang/packets"
+	"github.com/KazumiLine/MQTToT/packets"
 )
 
 const closedNetConnErrorText = "use of closed network connection" // error string for closed conn (https://golang.org/src/net/error_test.go)
@@ -45,24 +45,26 @@ func ConnectMQTT(conn net.Conn, cm *packets.ConnectPacket, protocolVersion uint)
 }
 
 func connectMQTT(conn io.ReadWriter, cm *packets.ConnectPacket, protocolVersion uint) (byte, bool, error) {
-	switch protocolVersion {
-	case 3:
-		DEBUG.Println(CLI, "Using MQTT 3.1 protocol")
-		cm.ProtocolName = "MQIsdp"
-		cm.ProtocolVersion = 3
-	case 0x83:
-		DEBUG.Println(CLI, "Using MQTT 3.1b protocol")
-		cm.ProtocolName = "MQIsdp"
-		cm.ProtocolVersion = 0x83
-	case 0x84:
-		DEBUG.Println(CLI, "Using MQTT 3.1.1b protocol")
-		cm.ProtocolName = "MQTT"
-		cm.ProtocolVersion = 0x84
-	default:
-		DEBUG.Println(CLI, "Using MQTT 3.1.1 protocol")
-		cm.ProtocolName = "MQTT"
-		cm.ProtocolVersion = 4
-	}
+	// switch protocolVersion {
+	// case 3:
+	// 	DEBUG.Println(CLI, "Using MQTT 3.1 protocol")
+	// 	cm.ProtocolName = "MQIsdp"
+	// 	cm.ProtocolVersion = 3
+	// case 0x83:
+	// 	DEBUG.Println(CLI, "Using MQTT 3.1b protocol")
+	// 	cm.ProtocolName = "MQIsdp"
+	// 	cm.ProtocolVersion = 0x83
+	// case 0x84:
+	// 	DEBUG.Println(CLI, "Using MQTT 3.1.1b protocol")
+	// 	cm.ProtocolName = "MQTT"
+	// 	cm.ProtocolVersion = 0x84
+	// default:
+	// 	DEBUG.Println(CLI, "Using MQTT 3.1.1 protocol")
+	// 	cm.ProtocolName = "MQTT"
+	// 	cm.ProtocolVersion = 4
+	// }
+	cm.ProtocolName = "MQTToT"
+	cm.ProtocolVersion = 3
 
 	if err := cm.Write(conn); err != nil {
 		ERROR.Println(CLI, err)

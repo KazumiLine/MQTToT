@@ -60,17 +60,18 @@ func (c *ConnectPacket) Write(w io.Writer) error {
 	body.WriteByte(c.ProtocolVersion)
 	body.WriteByte(boolToByte(c.CleanSession)<<1 | boolToByte(c.WillFlag)<<2 | c.WillQos<<3 | boolToByte(c.WillRetain)<<5 | boolToByte(c.PasswordFlag)<<6 | boolToByte(c.UsernameFlag)<<7)
 	body.Write(encodeUint16(c.Keepalive))
-	body.Write(encodeString(c.ClientIdentifier))
-	if c.WillFlag {
-		body.Write(encodeString(c.WillTopic))
-		body.Write(encodeBytes(c.WillMessage))
-	}
-	if c.UsernameFlag {
-		body.Write(encodeString(c.Username))
-	}
-	if c.PasswordFlag {
-		body.Write(encodeBytes(c.Password))
-	}
+	// body.Write(encodeString(c.ClientIdentifier))
+	body.Write([]byte(c.ClientIdentifier))
+	// if c.WillFlag {
+	// 	body.Write(encodeString(c.WillTopic))
+	// 	body.Write(encodeBytes(c.WillMessage))
+	// }
+	// if c.UsernameFlag {
+	// 	body.Write(encodeString(c.Username))
+	// }
+	// if c.PasswordFlag {
+	// 	body.Write(encodeBytes(c.Password))
+	// }
 	c.FixedHeader.RemainingLength = body.Len()
 	packet := c.FixedHeader.pack()
 	packet.Write(body.Bytes())

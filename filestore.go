@@ -19,12 +19,13 @@
 package mqtt
 
 import (
+	"io/fs"
 	"os"
 	"path"
 	"sort"
 	"sync"
 
-	"github.com/eclipse/paho.mqtt.golang/packets"
+	"github.com/KazumiLine/MQTToT/packets"
 )
 
 const (
@@ -245,7 +246,7 @@ func exists(file string) bool {
 	return true
 }
 
-type fileInfos []os.FileInfo
+type fileInfos []fs.DirEntry
 
 func (f fileInfos) Len() int {
 	return len(f)
@@ -256,5 +257,7 @@ func (f fileInfos) Swap(i, j int) {
 }
 
 func (f fileInfos) Less(i, j int) bool {
-	return f[i].ModTime().Before(f[j].ModTime())
+	info1, _ := f[i].Info()
+	info2, _ := f[j].Info()
+	return info1.ModTime().Before(info2.ModTime())
 }
