@@ -75,6 +75,7 @@ func (c *ConnectPacket) Write(w io.Writer) error {
 	c.FixedHeader.RemainingLength = body.Len()
 	packet := c.FixedHeader.pack()
 	packet.Write(body.Bytes())
+	fmt.Println(body.Bytes())
 	_, err = packet.WriteTo(w)
 
 	return err
