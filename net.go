@@ -64,7 +64,7 @@ func connectMQTT(conn io.ReadWriter, cm *packets.ConnectPacket, protocolVersion 
 	// 	cm.ProtocolVersion = 4
 	// }
 	cm.ProtocolName = "MQTToT"
-	cm.ProtocolVersion = 3
+	cm.ProtocolVersion = byte(protocolVersion)
 
 	if err := cm.Write(conn); err != nil {
 		ERROR.Println(CLI, err)
